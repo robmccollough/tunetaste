@@ -1,0 +1,74 @@
+Once authenticated, the user is able to:
+
+1.) View their top tracks and artists 
+
+2.) View all their playlists and click into them to view all the tracks
+
+3.) View individual song or averaged playlist track data through charts and graphs (nivo)
+
+4.) View individual artist or averaged playlist artist data through charts and graphs
+
+5.) Search for a song or artist and view the data on them
+
+6.) View basic data about their profile (name, picture, maybe account type)
+
+7.) Have a great time doin it
+
+Necesary components and their requirements (use ssr)
+
+-Track Display
+    -List true ? smaller form factor :
+    -Optional numbering
+    -Image
+    -Title
+    -Artist(s)
+    -StreamCount
+    -Preview
+    -View on spotify
+    -Showdata button
+
+-Artist Display
+    -List true ? smaller form factor :
+    -Optional numbering
+    -Image
+    -Name
+    -Genre(s)
+    -Followers
+    -View on spotify
+    -Showdata button
+
+-Playlist display
+    -Image
+    -Title
+    -Description
+    -Owner
+    -Track list
+    -Showdata (averages all the tracks)
+
+-Track(s) Data Display
+    -Single track or average of many
+    Song info
+        Image, Title, Artist(s)
+    Features
+        Floats (Represent with speedometer graphic) (0-1)
+            -Acousticness
+            -Danceability
+            -Energy
+            -Instrumentalness
+            -Livliness
+            -Speechiness
+            -Valence
+        Non 0-1 Float (Bar graph?)
+            -Loudness
+            -Tempo
+        Ints (Straight up show the value)
+            -Key (convert from pitch class notation)
+            -Mode (Major or minor)
+            -Duration (convert from ms)
+    Info button
+        -help component
+
+
+
+-Help Component
+    -Shows what the audio features actually means
