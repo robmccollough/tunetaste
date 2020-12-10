@@ -1,53 +1,40 @@
-import Head from 'next/head'
-import React from 'react'
-import qs from 'qs'
-import {setStateCode} from '../lib/auth'
+import Head from 'next/head';
+import React, { useState, useEffect } from 'react';
+import qs from 'qs';
+import { setStateCode } from '../lib/auth';
 
-export default class Login extends React.Component {
+const Login = () => {
+    const [url, setURL] = useState('');
 
-  constructor(props){
-    super(props)
-    this.state = {
-      url : null
-    }
-  }
+    useEffect(() => {
+        const fetchURL = async () => {
+            let code = setStateCode(window.localStorage);
+            let url = await fetch('/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ stateCode: code })
+            })
+                .then((r) => r.json())
+                .then((r) => setURL(r.url));
+        };
 
-  //set state code on mount, then use to build url
-  async componentDidMount(){
-    
-    let code = setStateCode(window.localStorage);
-    let url = await fetch('/api/auth', 
-    {method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body : JSON.stringify({stateCode : code})
-    })
-    .then(r => r.json())
-    .then(r => r.url)
+        fetchURL();
+    }, []);
 
-
-    this.setState({
-      url : url
-    })
-  }
-  
-  render(){
     return (
-      <div className="container">
-        <Head>
-          <title>Tunetaste</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        
-        <main>
-          <a href={this.state.url}>Authorize</a>
-        </main>
+        <div className="container">
+            <Head>
+                <title>Tunetaste</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
 
-      </div>
-    )
-  }
-  
-}
+            <main>
+                <a href={url}>Authorize</a>
+            </main>
+        </div>
+    );
+};
 
-
+export default Login;

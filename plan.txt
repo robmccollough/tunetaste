@@ -72,3 +72,26 @@ Necesary components and their requirements (use ssr)
 
 -Help Component
     -Shows what the audio features actually means
+
+
+
+
+
+
+
+TOOO: 11/23
+
+-Implement server side rendering of components
+-Research and install ui library and implement basic page skeletons
+-Pages:
+    -My playlists
+    -My tops
+    -Search (cant use ssr here )
+    -Compare (cant use ssr here )
+
+Spotify points to hit:
+-top tracks
+-top artists
+-my playlists
+-my profile
+

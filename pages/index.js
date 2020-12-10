@@ -1,65 +1,42 @@
-import Head from 'next/head';
-import Router from 'next/Router';
+import React, { useState, useEffect } from 'react';
 import qs from 'qs';
-import {getStateCode} from '../lib/auth'
-import React from 'react'
+import Router from 'next/Router';
+import TopLayout from '../components/top/';
+import { getStateCode } from '../lib/auth';
 
-/* This component is used to parse the query string and determine wether the user has been authenticated, 
-to extract the access token and verify the state. If the access code is present and the state verified, a request is made 
-to the /me endpoint. Only when this returns a 200 code is the user linked to the home page.
-*/
+//Functional Component
 
-export default class Home extends React.Component {
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            access_token : null,
-            storedStateCode : null,
-            returnedStateCode: null,
-            stateMatch : false,
-            error : null
+const Home = () => {
+    //States
+    const [auth, setAuth] = useState({
+        access_token: null,
+        stateMatch: null
+    });
+
+    //onMount, check for access token and redirect to login if none
+    useEffect(() => {
+        const qp = qs.parse(window.location.hash);
+        const storedStateCode = getStateCode(window.localStorage);
+
+        let access_token = qp['#access_token'];
+
+        if (access_token) {
+            setAuth({
+                access_token: access_token,
+                stateMatch: qp.state == storedStateCode
+            });
+        } else {
+            Router.push('/login');
+            return;
         }
-    }
+    }, []);
 
-    componentDidMount(){
-        //Parse query string for returned params
-        const qp = qs.parse(window.location.hash)
-        const storedStateCode = getStateCode(window.localStorage)
+    //return loader if no access code present
+    return !auth.access_token ? (
+        <span>Taking you to log in...</span>
+    ) : (
+        <TopLayout access_code={auth.access_token} />
+    );
+};
 
-        
-        let access_token = qp['#access_token']
-
-        if(access_token){
-            //Remove unsightly query params
-
-            Router.replace('/')
-
-            this.setState({
-                access_token : access_token,
-                returnedStateCode : qp.state,
-                storedStateCode: storedStateCode,
-                stateMatch : qp.state == storedStateCode,
-                error: qp.error
-            })
-        }else{
-            Router.push('/login')
-        }
-
-
-        
-    }
-
-    render(){
-        const {access_token, stateMatch, error} = this.state;
-
-        return (
-            <div>
-                <span>Token : {access_token}</span>
-                <span>Match : {stateMatch.toString()}</span>
-            </div>
-            ) 
-    }
-
-
-}
+export default Home;

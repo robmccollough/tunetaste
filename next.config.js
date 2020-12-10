@@ -1,5 +1,5 @@
 module.exports = {
     env: {
-      GREETING: "Hello World",
-    },
+        GREETING: 'Hello World'
+    }
 };
