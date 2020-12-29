@@ -95,3 +95,10 @@ Spotify points to hit:
 -my playlists
 -my profile
 
+Components Needed:
+
+-Login Redirect
+-General List Component
+-Track Component
+-Playlist display
+-error component

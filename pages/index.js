@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Container } from '@material-ui/core';
 import qs from 'qs';
-import Router from 'next/Router';
-import TopLayout from '../components/top/';
+import Router from 'next/router';
+import Header from '../components/header/Header';
 import { getStateCode } from '../lib/auth';
 
 //Functional Component
@@ -35,7 +36,9 @@ const Home = () => {
     return !auth.access_token ? (
         <span>Taking you to log in...</span>
     ) : (
-        <TopLayout access_code={auth.access_token} />
+        <Container maxWidth={false} disableGutters>
+            <Header access_code={auth.access_token} />
+        </Container>
     );
 };
 

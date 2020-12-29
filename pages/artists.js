@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Typography } from '@material-ui/core';
-import TopLayout from '../components/top';
+import React from 'react';
+import Header from '../components/header/Header';
+import { Container } from '@material-ui/core';
 import { getTopArtists } from '../lib/data';
 
 const ArtistsPage = (props) => {
@@ -9,9 +9,8 @@ const ArtistsPage = (props) => {
     return !authenticated ? (
         <span>Taking you to log in...</span>
     ) : (
-        <Container>
-            <TopLayout access_code={access_code} />
-            My top artists
+        <Container maxWidth={false} disableGutters>
+            <Header access_code={access_code} />
         </Container>
     );
 };

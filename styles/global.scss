@@ -1,13 +1,19 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  line-height: 1.6;
-  font-size: 18px;
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
+    line-height: 1.6;
+    font-size: 18px;
+}
+
+body {
+    background: linear-gradient(180deg, #4f4e4e 0%, #201f1f 42.19%, #121212 83.85%);
+    width: 100vw;
+    height: 100vh;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { Box, Typography, Avatar } from '@material-ui/core';
-import { getMyProfile } from '../../lib/data';
+import { getMyProfile } from '../../lib/fetching';
+import styles from './ProfileView.module.scss';
 
 const ProfileView = (props) => {
     const { access_code } = props;
@@ -26,7 +27,7 @@ const ProfileView = (props) => {
             } else {
                 setProfile({
                     image: result.images[0],
-                    name: result.display_name,
+                    name: result.display_name.split(' ')[0],
                     country: result.country,
                     error: null
                 });
@@ -36,20 +37,32 @@ const ProfileView = (props) => {
     }, []);
 
     return profile.error ? (
-        <Box maxWidth="200px" height="75%">
-            <Typography>Profile Unavailable : {profile.error.toString()}</Typography>
+        <Box
+            maxWidth="200px"
+            height="75%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center">
+            <Avatar variant="circular" className={styles.small} />
         </Box>
     ) : (
-        <Box
-            display="flex"
-            maxWidth="200px"
-            h="75%"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-evenly">
-            <Typography>{profile.name}</Typography>
-            <Avatar variant="circle" src={profile.image && profile.image.url} />
-            <ReactCountryFlag countryCode={profile.country} />
+        <Box className={styles.container}>
+            {profile.name && (
+                <Typography className={styles.text} align="center" noWrap={true} variant="overline">
+                    {profile.name}
+                </Typography>
+            )}
+            {profile.image && (
+                <Avatar variant="circular" className={styles.small} src={profile.image.url} />
+            )}
+            {profile.country && (
+                <ReactCountryFlag
+                    style={{
+                        fontSize: '1.5em'
+                    }}
+                    countryCode={profile.country}
+                />
+            )}
         </Box>
     );
 };

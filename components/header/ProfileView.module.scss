@@ -1,0 +1,17 @@
+.small {
+    height: 30px;
+    width: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 50px;
+    min-width: 170px;
+}
+
+.text {
+    color: white;
+}
