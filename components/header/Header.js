@@ -10,7 +10,7 @@ const Header = (props) => {
     return (
         <Box className={styles.container}>
             <Box className={styles.outer}>
-                <Container className={styles.inner} maxWidth="lg">
+                <Container className={styles.inner} maxWidth="xl">
                     <Typography align="center" variant="overline" className={styles.logo}>
                         Tunetaste
                     </Typography>

@@ -1,6 +1,7 @@
 .small {
     height: 30px;
     width: 30px;
+    margin: 0px 20px;
 }
 
 .container {
@@ -9,9 +10,22 @@
     align-items: center;
     justify-content: space-evenly;
     height: 50px;
-    min-width: 170px;
+    margin-right: 20px;
 }
 
 .text {
     color: white;
+}
+
+//Dont show name on mobile
+
+@media (max-width: 500px) {
+    .hide {
+        display: none;
+    }
+
+    .container {
+        justify-content: flex-end;
+        margin-right: 0px;
+    }
 }

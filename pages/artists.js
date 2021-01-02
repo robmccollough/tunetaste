@@ -1,14 +1,18 @@
 import React from 'react';
 import Header from '../components/header/Header';
 import { Container } from '@material-ui/core';
-import { getTopArtists } from '../lib/data';
+import { getTopArtists } from '../lib/fetching';
 
 const ArtistsPage = (props) => {
-    const { access_code, authenticated } = props;
+    const { access_code, authenticated, data } = props;
 
-    return !authenticated ? (
-        <span>Taking you to log in...</span>
-    ) : (
+    console.log(data);
+
+    if (!authenticated) {
+        return <div>Oops! You goofed. Try logging in again</div>;
+    }
+
+    return (
         <Container maxWidth={false} disableGutters>
             <Header access_code={access_code} />
         </Container>

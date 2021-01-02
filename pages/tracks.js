@@ -1,38 +1,28 @@
-import React, { useState } from 'react';
-import Router from 'next/router';
-import { Container } from '@material-ui/core';
+import React from 'react';
+import { Container, Typography } from '@material-ui/core';
 import Header from '../components/header/Header';
-import Track from '../components/tracks/Track';
-import DataSelectionLayout from '../components/general/DataSelectionLayout';
-import { getFeaturesFromTrackList, getTopTracks } from '../lib/fetching';
+import { getFeaturesFromTrackList, getGenresFromArtistIds, getTopTracks } from '../lib/fetching';
+import { averageTrackFeatures } from '../lib/parsing';
+import TopTracksDisplay from '../components/tracks/TopTracksDisplay';
 
 const TracksPage = (props) => {
     const { access_code, authenticated, track_data, track_features } = props;
+
     console.log(track_features);
+    console.log(track_data);
+
     if (!authenticated) {
-        Router.push('/login');
         return <span>Taking you to log in...</span>;
     }
 
-    const [feature_data, setFeatureData] = useState(track_features.avg_features);
-
-    //Populate list items, pass through data set function and add the
-    let list_items = track_data.items.map((elt, index) => {
-        return (
-            <Track
-                data={elt}
-                key={index}
-                listNumber={index}
-                features={track_features.all_features.find((feature) => feature.id == elt.id)}
-                select={setFeatureData}
-            />
-        );
-    });
     return (
         <Container maxWidth={false} disableGutters>
             <Header access_code={access_code} />
             <Container maxWidth="lg" disableGutters>
-                <DataSelectionLayout item_data={list_items} feature_data={feature_data} />
+                <Typography align="center" gutterBottom variant="h4">
+                    Your most jammin jams
+                </Typography>
+                <TopTracksDisplay track_data={track_data} track_features={track_features} />
             </Container>
         </Container>
     );
@@ -46,54 +36,46 @@ export async function getServerSideProps(context) {
             }
         };
     }
-
+    //Fetch top tracks from api
     let tracks = await getTopTracks(context.query.access_code).then((r) => {
         console.log('Recieved Track Data: ', r);
         return r;
     });
-    let ids = tracks.items.reduce((acc, curr) => acc + curr.id + ',', '');
 
-    let features = await getFeaturesFromTrackList(context.query.access_code, ids).then((r) => {
-        console.log('Recieved Track Features: ', r);
-        let avg_features = r.audio_features.reduce(
-            (acc, curr, index, arr) => {
-                acc.danceability += curr.danceability / arr.length;
-                acc.key += curr.key / arr.length;
-                acc.energy += curr.energy / arr.length;
-                acc.loudness += curr.loudness / arr.length;
-                acc.mode += curr.mode / arr.length;
-                acc.speechiness += curr.speechiness / arr.length;
-                acc.acousticness += curr.acousticness / arr.length;
-                acc.instrumentalness += curr.instrumentalness / arr.length;
-                acc.liveness += curr.liveness / arr.length;
-                acc.valence += curr.valence / arr.length;
-                acc.tempo += curr.tempo / arr.length;
-                return acc;
-            },
-            {
-                danceability: 0,
-                energy: 0,
-                key: 0,
-                loudness: 0,
-                mode: 0,
-                speechiness: 0,
-                acousticness: 0,
-                instrumentalness: 0,
-                liveness: 0,
-                valence: 0,
-                tempo: 0
-            }
-        );
+    //Grab track ids in order to request audio features
+    let track_ids = tracks.items.map((elt) => elt.id).join(',');
+    //Grab artist ids in order to request track genres
+    //SOME SONGS HAVE MULTIPLE ARTISTS,THIS ONLY TAKES THE FIRST ONE
+    let artist_ids = tracks.items.map((elt) => elt.artists[0].id).join(',');
 
-        // Object.keys(avg_features).forEach(
-        //     (elt) => (avg_features[elt] = avg_features[elt] / r.audio_features.length)
-        // );
-        console.log(avg_features);
-        return {
-            all_features: r.audio_features,
-            avg_features: avg_features
-        };
+    let genres = await getGenresFromArtistIds(context.query.access_code, artist_ids).then((r) => {
+        console.log('Recieved Track Genres: ', r);
+        return r;
     });
+
+    let features = await getFeaturesFromTrackList(context.query.access_code, track_ids).then(
+        (r) => {
+            console.log('Recieved Track Features: ', r);
+
+            //For each individual track feature object, add in the genres associated with its primary artist
+            r.audio_features.forEach((track) => {
+                //Find artist id from full track list
+                let first_artist_id = tracks.items.find((elt) => elt.id == track.id).artists[0].id;
+
+                track['genres'] = genres.artist_id_to_genres[first_artist_id];
+            });
+
+            let aggregate_features = {
+                ...averageTrackFeatures(r.audio_features),
+                genre_counts: genres.total_genre_counts
+            };
+
+            return {
+                individual_features: r.audio_features,
+                aggregate_features: aggregate_features
+            };
+        }
+    );
 
     return {
         props: {

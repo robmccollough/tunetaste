@@ -1,0 +1,14 @@
+----High Priority----
+    > Create data display component
+    > Fix grid structure of DataSelection
+    > Playlist Display Component
+    > Artist Display Component
+
+
+----Low Priority----
+    > Login Page
+    > Add "Oops, you need authorization for that" component on non-index pages
+    > Search functionality
+    > Create footer component
+    > Reuse common layout between pages
+    > Loading page (research next)

@@ -48,7 +48,11 @@ const ProfileView = (props) => {
     ) : (
         <Box className={styles.container}>
             {profile.name && (
-                <Typography className={styles.text} align="center" noWrap={true} variant="overline">
+                <Typography
+                    className={`${styles.text} ${styles.hide}`}
+                    align="center"
+                    noWrap={true}
+                    variant="overline">
                     {profile.name}
                 </Typography>
             )}
@@ -58,7 +62,7 @@ const ProfileView = (props) => {
             {profile.country && (
                 <ReactCountryFlag
                     style={{
-                        fontSize: '1.5em'
+                        fontSize: '1.3em'
                     }}
                     countryCode={profile.country}
                 />
