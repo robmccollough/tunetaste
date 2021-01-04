@@ -4,14 +4,15 @@ import styles from './AuthLinkExp.module.scss';
 
 const AuthLinkExp = ({ url }) => {
     return (
-        <Box className={styles.container}>
+        <Box className={styles.container} maxWidth="md">
             <Typography variant="h2" align="center" gutterBottom>
-                In order to work, Tunetaste needs (temporary) access to your Spotify data
+                In order to work, Tunetaste needs access to your Spotify data.
             </Typography>
-            <Typography variant="h4" align="center" gutterBottom>
+            <Typography variant="h5" align="center" gutterBottom>
                 Clicking the button below will take you to the Spotify accounts service, where you
-                can authorize access
+                can review and authorize access. Afterwards, you will redirected back to Tunetaste.
             </Typography>
+
             <Button href={url} className={styles.button}>
                 Authorize
             </Button>
@@ -32,15 +33,17 @@ const AuthLinkExp = ({ url }) => {
                 <li>
                     <Typography variant="subtitle1" align="left" gutterBottom>
                         This access is temporary (1 hour). If using the site for more than 1 hour,
-                        you may be returned to this page in order to refresh the access code.
+                        or returning at a later date, you will be returned to this page in order to
+                        refresh the access code.
                     </Typography>
                 </li>
                 <li>
                     <Typography align="left" gutterBottom>
                         This website is a personal project of{' '}
                         <Link href={'https://robmccollouhgh.dev'}>Rob McCollough</Link> (thats me!).
-                        None of your Spotify data is stored anywhere, because honestly it's a lot of
-                        work and I'm only one guy. You can check out the full source code on{' '}
+                        None of your Spotify data is stored anywhere, because honestly it&apos;s a
+                        lot of work and I&apos;m only one guy. You can check out the full source
+                        code on{' '}
                         <Link href={'https://github.com/robmccollough/tunetaste'}>GitHub</Link>
                     </Typography>
                 </li>
