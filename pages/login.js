@@ -1,7 +1,9 @@
-import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import qs from 'qs';
+import Head from 'next/head';
+import { Container } from '@material-ui/core';
+import Header from '../components/header/Header';
 import { setStateCode } from '../lib/auth';
+import AuthLinkExp from '../components/auth/AuthLinkExp';
 
 const Login = () => {
     const [url, setURL] = useState('');
@@ -9,7 +11,7 @@ const Login = () => {
     useEffect(() => {
         const fetchURL = async () => {
             let code = setStateCode(window.localStorage);
-            let url = await fetch('/api/auth', {
+            await fetch('/api/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,10 +31,12 @@ const Login = () => {
                 <title>Tunetaste</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
-            <main>
-                <a href={url}>Authorize</a>
-            </main>
+            <Container maxWidth={false} disableGutters>
+                <Header access_code={null} />
+                <Container maxWidth="md">
+                    <AuthLinkExp url={url}></AuthLinkExp>
+                </Container>
+            </Container>
         </div>
     );
 };

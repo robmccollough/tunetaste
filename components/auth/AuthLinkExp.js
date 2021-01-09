@@ -10,7 +10,8 @@ const AuthLinkExp = ({ url }) => {
             </Typography>
             <Typography variant="h5" align="center" gutterBottom>
                 Clicking the button below will take you to the Spotify accounts service, where you
-                can review and authorize access. Afterwards, you will redirected back to Tunetaste.
+                can review and authorize access. Afterwards, you will be redirected back to
+                Tunetaste.
             </Typography>
 
             <Button href={url} className={styles.button}>

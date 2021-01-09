@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header/Header';
 import { Container } from '@material-ui/core';
 import { getTopArtists } from '../lib/fetching';
+import Oops from '../components/auth/Oops';
 
 const ArtistsPage = (props) => {
     const { access_code, authenticated, data } = props;
@@ -9,9 +10,13 @@ const ArtistsPage = (props) => {
     console.log(data);
 
     if (!authenticated) {
-        return <div>Oops! You goofed. Try logging in again</div>;
+        return (
+            <Container maxWidth={false} disableGutters>
+                <Header access_code={null} />
+                <Oops message={'Your access code was missing or expired.'} />
+            </Container>
+        );
     }
-
     return (
         <Container maxWidth={false} disableGutters>
             <Header access_code={access_code} />

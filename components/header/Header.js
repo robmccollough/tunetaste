@@ -15,11 +15,11 @@ const Header = (props) => {
                         Tunetaste
                     </Typography>
 
-                    <ProfileView access_code={access_code} />
+                    {access_code && <ProfileView access_code={access_code} />}
                 </Container>
             </Box>
 
-            <Navigator access_code={access_code} />
+            {access_code && <Navigator access_code={access_code} />}
         </Box>
     );
 };

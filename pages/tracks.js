@@ -4,7 +4,7 @@ import Header from '../components/header/Header';
 import { getFeaturesFromTrackList, getGenresFromArtistIds, getTopTracks } from '../lib/fetching';
 import { averageTrackFeatures } from '../lib/parsing';
 import TopTracksDisplay from '../components/tracks/TopTracksDisplay';
-
+import Oops from '../components/auth/Oops';
 const TracksPage = (props) => {
     const { access_code, authenticated, track_data, track_features } = props;
 
@@ -12,13 +12,18 @@ const TracksPage = (props) => {
     console.log(track_data);
 
     if (!authenticated) {
-        return <span>Taking you to log in...</span>;
+        return (
+            <Container maxWidth={false} disableGutters>
+                <Header access_code={null} />
+                <Oops message={'Your access code was missing or expired.'} />
+            </Container>
+        );
     }
 
     return (
         <Container maxWidth={false} disableGutters>
             <Header access_code={access_code} />
-            <Container maxWidth="lg" disableGutters>
+            <Container maxWidth="xl" disableGutters>
                 <Typography align="center" gutterBottom variant="h4">
                     Your most jammin jams
                 </Typography>
@@ -36,6 +41,7 @@ export async function getServerSideProps(context) {
             }
         };
     }
+
     //Fetch top tracks from api
     let tracks = await getTopTracks(context.query.access_code).then((r) => {
         console.log('Recieved Track Data: ', r);
@@ -44,6 +50,7 @@ export async function getServerSideProps(context) {
 
     //Grab track ids in order to request audio features
     let track_ids = tracks.items.map((elt) => elt.id).join(',');
+
     //Grab artist ids in order to request track genres
     //SOME SONGS HAVE MULTIPLE ARTISTS,THIS ONLY TAKES THE FIRST ONE
     let artist_ids = tracks.items.map((elt) => elt.artists[0].id).join(',');
