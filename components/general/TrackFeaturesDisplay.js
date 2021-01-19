@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
-import GenrePieChart from '../../components/';
+import GenrePieChart from './charting/GenrePieChart';
 import styles from './TrackFeaturesDisplay.module.scss';
 
 // Features to display (for aggregate):
@@ -20,7 +20,7 @@ import styles from './TrackFeaturesDisplay.module.scss';
 const TrackFeaturesDisplay = ({ single, feature_data }) => {
     console.log('TFD', feature_data);
     return (
-        <Box flexDirection="column">
+        <Box flexDirection="column" alignItems="center" justifyContent="space-evenly">
             <Typography variant="overline" gutterBottom>
                 Mode : {single ? 'Single' : 'Aggregate'}
             </Typography>

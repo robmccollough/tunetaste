@@ -26,18 +26,15 @@ const Login = () => {
     }, []);
 
     return (
-        <div className="container">
+        <Container maxWidth="xl" disableGutters>
             <Head>
                 <title>Tunetaste</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Container maxWidth={false} disableGutters>
-                <Header access_code={null} />
-                <Container maxWidth="md">
-                    <AuthLinkExp url={url}></AuthLinkExp>
-                </Container>
-            </Container>
-        </div>
+            <Header access_code={null} hideNav={true} />
+
+            <AuthLinkExp url={url} />
+        </Container>
     );
 };
 

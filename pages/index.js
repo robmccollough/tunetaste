@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import qs from 'qs';
-import Router from 'next/router';
+// import Router from 'next/Router';
 import Header from '../components/header/Header';
+import Head from 'next/head';
+import Hero from '../components/hero/Hero';
 import { getStateCode } from '../lib/auth';
 
 //Functional Component
@@ -26,18 +28,28 @@ const Home = () => {
                 access_token: access_token,
                 stateMatch: qp.state == storedStateCode
             });
-        } else {
-            Router.push('/login');
-            return;
+            // Router.replace('/');
         }
     }, []);
 
     //return loader if no access code present
-    return !auth.access_token ? (
-        <span>Taking you to log in...</span>
-    ) : (
-        <Container maxWidth={false} disableGutters>
-            <Header access_code={auth.access_token} />
+    return (
+        <Container maxWidth={'xl'} disableGutters>
+            <Head>
+                <title>Tunetaste</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            {auth.access_token ? (
+                <div>
+                    <Header access_code={auth.access_token} hideNav={true} />
+                    <Hero access_code={auth.access_token} />
+                </div>
+            ) : (
+                <div>
+                    <Header access_code={null} hideNav={true} />
+                    <Hero access_code={null} />
+                </div>
+            )}
         </Container>
     );
 };

@@ -8,27 +8,25 @@ import Oops from '../components/auth/Oops';
 const TracksPage = (props) => {
     const { access_code, authenticated, track_data, track_features } = props;
 
-    console.log(track_features);
-    console.log(track_data);
+    // console.log(track_features);
+    // console.log(track_data);
 
     if (!authenticated) {
         return (
             <Container maxWidth={false} disableGutters>
-                <Header access_code={null} />
+                <Header access_code={null} hideNav={true} />
                 <Oops message={'Your access code was missing or expired.'} />
             </Container>
         );
     }
 
     return (
-        <Container maxWidth={false} disableGutters>
-            <Header access_code={access_code} />
-            <Container maxWidth="xl" disableGutters>
-                <Typography align="center" gutterBottom variant="h4">
-                    Your most jammin jams
-                </Typography>
-                <TopTracksDisplay track_data={track_data} track_features={track_features} />
-            </Container>
+        <Container maxWidth="xl" disableGutters>
+            <Header access_code={access_code} showNav={true} />
+            <Typography align="center" gutterBottom variant="h4">
+                Your top tracks
+            </Typography>
+            <TopTracksDisplay track_data={track_data} track_features={track_features} />
         </Container>
     );
 };

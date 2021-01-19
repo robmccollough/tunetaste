@@ -10,39 +10,51 @@ const ProfileView = (props) => {
     let [profile, setProfile] = useState({
         image: null,
         name: null,
-        country: null
+        country: null,
+        signedIn: false
     });
 
     useEffect(() => {
-        let fecther = async () => {
-            let result = await getMyProfile(access_code).then((r) => {
-                console.log('Recieved Profile Data: ', r);
-                return r;
-            });
-            if (result.error) {
-                setProfile({
-                    ...profile,
-                    error: result.error
+        if (access_code) {
+            let fecther = async () => {
+                let result = await getMyProfile(access_code).then((r) => {
+                    console.log('Recieved Profile Data: ', r);
+                    return r;
                 });
-            } else {
-                setProfile({
-                    image: result.images[0],
-                    name: result.display_name.split(' ')[0],
-                    country: result.country,
-                    error: null
-                });
-            }
-        };
-        fecther();
-    }, []);
+                if (result.error) {
+                    setProfile({
+                        ...profile,
+                        error: result.error
+                    });
+                } else {
+                    setProfile({
+                        image: result.images[0],
+                        name: result.display_name.split(' ')[0],
+                        country: result.country,
+                        error: null,
+                        signedIn: true
+                    });
+                }
+            };
+            fecther();
+        }
+    }, [access_code]);
 
-    return profile.error ? (
+    return !profile.signedIn || profile.error ? (
         <Box
             maxWidth="200px"
             height="75%"
             display="flex"
             alignItems="center"
-            justifyContent="center">
+            justifyContent="center"
+            className={styles.container}>
+            <Typography
+                className={`${styles.text} ${styles.hide}`}
+                align="center"
+                noWrap={true}
+                variant="overline">
+                Not signed in
+            </Typography>
             <Avatar variant="circular" className={styles.small} />
         </Box>
     ) : (

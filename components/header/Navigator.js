@@ -1,25 +1,33 @@
 import React from 'react';
-import { Container, Box } from '@material-ui/core';
+import { Container, Box, Button } from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Link from 'next/link';
 import styles from './Navigator.module.scss';
 
 const Navigator = (props) => {
-    const { access_code } = props;
+    const { access_code, heroMode } = props;
 
     return (
-        <Container maxWidth="lg">
-            <Box className={styles.container}>
-                <Link href={`/playlists?access_code=${access_code}`}>
-                    <a className={styles.link}>Playlists</a>
-                </Link>
-                <Link href={`/artists?access_code=${access_code}`}>
-                    <a className={styles.link}>Top Artists</a>
-                </Link>
-                <Link href={`/tracks?access_code=${access_code}`}>
-                    <a className={styles.link}>Top Tracks</a>
-                </Link>
-            </Box>
-        </Container>
+        <Box className={heroMode ? styles.hero : styles.nav}>
+            <Link href={access_code ? `/tracks?access_code=${access_code}` : '/oops'}>
+                <Button className={styles.darker}>
+                    Top Tracks
+                    <ArrowForwardIcon />
+                </Button>
+            </Link>
+            <Link href={access_code ? `/artists?access_code=${access_code}` : '/oops'}>
+                <Button className={styles.lighter}>
+                    Top Artists
+                    <ArrowForwardIcon />
+                </Button>
+            </Link>
+            <Link href={access_code ? `/playlists?access_code=${access_code}` : '/oops'}>
+                <Button className={styles.lightest}>
+                    Playlists
+                    <ArrowForwardIcon />
+                </Button>
+            </Link>
+        </Box>
     );
 };
 
