@@ -1,0 +1,45 @@
+$bars: 20;
+
+.container {
+    width: 100vw;
+    height: 45%;
+    display: flex;
+    align-items: flex-end;
+}
+.bar {
+    width: 100% / $bars;
+    min-height: 10px;
+    margin-right: 1px;
+    box-shadow: 0 10px 15px #000;
+}
+
+$multiplier: 100 / $bars;
+@for $i from 0 through $bars {
+    .bar:nth-child(#{$i}) {
+        $saturation: 100 - (($i + 1) * $multiplier);
+        background-color: hsla(220, $saturation, 50%, 1);
+        animation: grow#{$i};
+        animation-iteration-count: infinite;
+        // animation-fill-mode: forwards;
+        animation-direction: alternate;
+        animation-duration: 7s;
+        animation-timing-function: ease-in-out;
+        // &:hover {
+        //     animation: none;
+        // }
+    }
+    @keyframes grow#{$i} {
+        @for $j from 0 through 5 {
+            #{$j * 20%} {
+                $value: random(100) / 100;
+                height: percentage($value);
+                background-color: hsla(220, 85%, 50%, $value);
+            }
+        }
+    }
+}
+
+//give component access to vars
+:export {
+    numBars: $bars;
+}

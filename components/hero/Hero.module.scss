@@ -1,0 +1,48 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.centered {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15%;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+        color: #fcfcfc;
+        margin: 20px;
+        width: 150px;
+        height: 60px;
+        // border: 1px solid white;
+        text-align: center;
+        box-shadow: 0 10px 15px #000;
+    }
+}
+
+.darker {
+    background-color: #2e6ff9fe;
+}
+
+.lighter {
+    background-color: #4090f2;
+}
+
+.title {
+    width: 100%;
+    height: 60%;
+}
