@@ -1,0 +1,107 @@
+.container {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgba(200, 200, 200, 0.4);
+    border-radius: 20px;
+    padding: 20px;
+    span {
+        font-family: 'Roboto';
+        display: block;
+        text-align: center;
+        font-size: 1em;
+    }
+    .slider {
+        height: 30%;
+        width: 100%;
+        background-color: rgb(218, 218, 218);
+        border-radius: 20px;
+        position: relative;
+
+        .minor {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            // border-right: 5px solid rgba(45, 45, 45, 0.783);
+            padding-right: 10px;
+            background-color: rgb(218, 218, 218);
+            z-index: 10;
+        }
+
+        .major {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            // border-left: 5px solid rgba(45, 45, 45, 0.783);
+            padding-left: 10px;
+            background-color: rgb(218, 218, 218);
+            z-index: 10;
+            transform: translateY(-50%);
+        }
+        .line {
+            width: 60%;
+            height: 5px;
+            background-color: rgba(45, 45, 45, 0.783);
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            &::before {
+                content: '';
+
+                height: 25px;
+                width: 5px;
+
+                position: absolute;
+                left: -5px;
+                top: 50%;
+                transform: translateY(-50%);
+
+                background-color: rgba(45, 45, 45, 0.783);
+            }
+            &::after {
+                content: '';
+
+                height: 25px;
+                width: 5px;
+
+                position: absolute;
+                right: -5px;
+                top: 50%;
+                transform: translateY(-50%);
+
+                background-color: rgba(45, 45, 45, 0.783);
+            }
+        }
+
+        .marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 5px;
+            height: 40px;
+            background-color: rgba(45, 45, 45, 0.9);
+
+            transition: left 2s ease-in-out;
+            transform: translate(-50%, -50%);
+
+            .label {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: -15px;
+                font-size: 0.8em;
+                color: rgba(45, 45, 45, 0.883);
+                text-align: center;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
