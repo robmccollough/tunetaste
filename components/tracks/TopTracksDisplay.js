@@ -17,8 +17,8 @@ const TopTracksDisplay = ({ track_data, track_features }) => {
     }
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12} md={4} className={styles.scrollableColumn}>
+        <Grid container spacing={3} className={styles.container}>
+            <Grid item xs={12} md={5} className={styles.scrollableColumn}>
                 {track_data.items.map((elt, index) => {
                     return (
                         <Track
@@ -30,7 +30,7 @@ const TopTracksDisplay = ({ track_data, track_features }) => {
                     );
                 })}
             </Grid>
-            <Grid item xs={12} md={8} className={`${styles.scrollableColumn} ${styles.whitetext}`}>
+            <Grid item xs={12} md={7} className={`${styles.scrollableColumn} ${styles.whitetext}`}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="overline">{'Your Data'}</Typography>

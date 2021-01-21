@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, Box, Typography, Avatar, Link, SvgIcon, Button } from '@material-ui/core';
+import { Grid, Box, Typography, Link, Button } from '@material-ui/core';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Image from 'next/image';
 import styles from './Track.module.scss';
-import Logo from '../../public/spotify.svg';
 import PreviewPlayer from './PreviewPlayer';
 
 const Track = (props) => {
@@ -18,47 +19,56 @@ const Track = (props) => {
     const { id, name, album, artists, external_urls, preview_url } = data;
 
     return (
-        <Grid container>
-            <Grid item xs={2}>
-                <Typography className={styles.listnum} variant="body2" color="textSecondary">
-                    {listNumber}
+        <Grid container className={styles.container}>
+            <Grid item xs={1}>
+                <Typography className={styles.listnum} variant="body2" color="textPrimary">
+                    {listNumber + 1}
                 </Typography>
             </Grid>
 
-            <Grid item xs={2}>
-                <Avatar
-                    src={album && album.images[0].url}
-                    variant="square"
-                    className={styles.cover}
+            <Grid item xs={2} className={styles.cover}>
+                <Image
+                    src={album && album.images[1].url}
+                    width={album && album.images[1].width}
+                    height={album && album.images[1].height}
                 />
             </Grid>
 
-            <Grid item xs={3}>
-                <Typography className={styles.name} variant="body1" color="textPrimary">
+            <Grid item xs={3} className={styles.name}>
+                <Link
+                    href={external_urls.spotify}
+                    variant="body1"
+                    color="textPrimary"
+                    target="_blank"
+                    rel="noopener">
                     {name}
-                </Typography>
+                </Link>
             </Grid>
 
             <Grid item xs={2}>
                 <Box className={styles.artists}>
                     {artists.map((elt, index) => (
-                        <Typography key={index} variant="body2" noWrap={true}>
+                        <Link
+                            key={index}
+                            variant="body2"
+                            noWrap={true}
+                            href={elt.external_urls.spotify}
+                            target="_blank"
+                            rel="noopener">
                             {elt.name}
-                        </Typography>
+                        </Link>
                     ))}
                 </Box>
             </Grid>
-
-            <Grid item xs={2}>
-                <Box className={styles.links}>
-                    <PreviewPlayer url={preview_url} />
-                    <Link href={external_urls.spotify} target="_blank" rel="noopener">
-                        <SvgIcon component={Logo} className={styles.logo} />
-                    </Link>
-                </Box>
+            <Grid item xs={1} className={styles.spacer}></Grid>
+            <Grid item xs={2} className={styles.links}>
+                <PreviewPlayer url={preview_url} />
             </Grid>
-            <Grid item xs={1}>
-                <Button onClick={() => select(features)}>Show Data</Button>
+
+            <Grid item xs={1} className={styles.button}>
+                <Button onClick={() => select(features)}>
+                    <ChevronRightIcon />
+                </Button>
             </Grid>
         </Grid>
     );
