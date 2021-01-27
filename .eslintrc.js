@@ -1,5 +1,5 @@
 module.exports = {
-    plugins: ['simple-import-sort'],
+    plugins: ['simple-import-sort', 'react-hooks'],
     root: true, // Make sure eslint picks up the config at the root of the directory
     parserOptions: {
         ecmaVersion: 2020, // Use the latest ecmascript standard
@@ -35,6 +35,8 @@ module.exports = {
                 specialLink: ['hrefLeft', 'hrefRight'],
                 aspects: ['invalidHref', 'preferButton']
             }
-        ]
+        ],
+        'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+        'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencies
     }
 };

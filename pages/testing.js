@@ -5,7 +5,7 @@ import data from '../testing/test_data';
 import GenrePieChart from '../components/general/charting/GenrePieChart';
 import FeatureRadar from '../components/general/charting/FeatureRadar';
 import PitchChart from '../components/general/charting/PitchChart';
-
+import ModeSlider from '../components/general/charting/ModeSlider';
 // Features to display (for aggregate):
 // -Genre Pie Chart (Top 7 genres, the rest under other)
 // -Full scrollable list of genres, as well as single number display of total number
@@ -19,6 +19,7 @@ import PitchChart from '../components/general/charting/PitchChart';
 const classes = {
     cell: {
         height: '50vh',
+        padding: '20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -63,6 +64,7 @@ const Testing = (props) => {
                         <Typography variant="overline" align="center">
                             Mode
                         </Typography>
+                        <ModeSlider data={0.3} />
                     </Grid>
                     <Grid item xs={4} style={classes.cell}>
                         <Typography variant="overline" align="center">
