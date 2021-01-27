@@ -1,7 +1,10 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
-import GenrePieChart from './charting/GenrePieChart';
 import styles from './TrackFeaturesDisplay.module.scss';
+import FeatureRadar from './charting/FeatureRadar';
+import GenrePieChart from './charting/GenrePieChart';
+import PitchChart from './charting/PitchChart';
+import ModeSlider from './charting/ModeSlider';
 
 // Features to display (for aggregate):
 // -Genre Pie Chart (Top 7 genres, the rest under other)
@@ -18,27 +21,53 @@ import styles from './TrackFeaturesDisplay.module.scss';
 // -Replace the Genre pie chart with bigger
 
 const TrackFeaturesDisplay = ({ single, feature_data }) => {
-    console.log('TFD', feature_data);
+    console.log(feature_data);
     return (
-        <Box flexDirection="column" alignItems="center" justifyContent="space-evenly">
-            <Typography variant="overline" gutterBottom>
-                Mode : {single ? 'Single' : 'Aggregate'}
-            </Typography>
-            {Object.keys(feature_data).map((feature, index) => {
-                if (feature == 'genre_counts') {
-                    return (
-                        <Typography key={index} variant="body2" gutterBottom>
-                            {feature} : {JSON.stringify(feature_data[feature])}
+        <Grid container spacing={3}>
+            <Grid item xs={12}>
+                <Grid container spacing={3}>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Genres Distribution
                         </Typography>
-                    );
-                }
-                return (
-                    <Typography key={index} variant="subtitle2" gutterBottom>
-                        {feature} : {feature_data[feature]}
-                    </Typography>
-                );
-            })}
-        </Box>
+                        <GenrePieChart data={feature_data.genre_counts} />
+                    </Grid>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Genres List
+                        </Typography>
+                        {/* <GenreList/> */}
+                    </Grid>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Feature Distribution
+                        </Typography>
+                        <FeatureRadar data={feature_data} />
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Average Pitch
+                        </Typography>
+                        <PitchChart data={feature_data.key} />
+                    </Grid>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Mode
+                        </Typography>
+                        <ModeSlider data={feature_data.mode} />
+                    </Grid>
+                    <Grid item xs={4} className={styles.cell}>
+                        <Typography variant="overline" align="center">
+                            Loudness
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 };
 
