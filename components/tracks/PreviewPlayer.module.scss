@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(130, 130, 130);
+    svg {
+        width: 40px;
+        height: 40px;
+        &:hover {
+            color: rgb(170, 170, 170);
+            cursor: pointer;
+        }
+    }
+}
+
+.unavailable {
+    svg {
+        &:hover {
+            color: rgb(220, 100, 100);
+            &:after {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translate(-100%, -50%);
+                content: 'Preview Unavailable';
+            }
+        }
+    }
+}
